@@ -7,13 +7,11 @@ verify_ssl = true
 
 [packages]
 flask = "*"
-flask-cors = "*"
+flask-sqlalchemy = "*"
+flask-migrate = "*"
+python-dotenv = "*"
 nltk = "*"
-scipy = "*"
-sentence-transformers = "*"
-humps = "*"
 typing-extensions = "*"
-mypy = "*"
 
 [requires]
 python_version = "3.7"

@@ -1,6 +1,5 @@
 import axios from "axios";
 import { NextPage } from "next";
-import { useRouter } from "next/router";
 import React from "react";
 import Layout from "../components/Layout";
 import SnippetList from "../components/SnippetList";
@@ -11,10 +10,12 @@ interface Props {
 }
 
 const Home: NextPage<Props> = props => {
-    const router = useRouter();
+    const content = props.snippets.length
+      ? <SnippetList snippets={props.snippets} />
+      : <h5>No snippets yet. Use <i>Upload</i> to create some.</h5>;
     return (
       <Layout title="Verbum : Home">
-          <SnippetList snippets={props.snippets} />
+          {content}
       </Layout>
     );
 };

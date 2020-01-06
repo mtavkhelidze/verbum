@@ -4,6 +4,7 @@ import * as React from "react";
 import { Col, Row } from "reactstrap";
 import Layout from "../../components/Layout";
 import SentenceList from "../../components/SentenceList";
+import { apiUrl } from "../../util/misc";
 
 interface Props {
     original: Sentence;
@@ -40,10 +41,9 @@ const SimilarSentences: NextPage<Props> = props => {
 
 SimilarSentences.getInitialProps = async ({ query, res }) => {
     const id = query.id;
-    const result = await axios
-      .get<SimilarResult>(`http://localhost:5000/similar/${id}`)
+    return await axios
+      .get<SimilarResult>(apiUrl(`/similar/${id}`))
       .then(d => d.data);
-    return result;
 };
 
 export default SimilarSentences;

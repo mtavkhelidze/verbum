@@ -1,8 +1,10 @@
-from typing import List
+import pickle
+from typing import List, Tuple
 
+import numpy as np
 from typing_extensions import TypedDict
 
-from . import db
+from app import db
 
 
 class ErrorResponse(TypedDict):
@@ -26,6 +28,10 @@ class SnippetResponse(TypedDict):
     sentences: List[SentenceResponse]
 
 
+class SentenceDict(SentenceResponse):
+    vector: np.ndarray
+
+
 class Snippet(db.Model):
     __tablename__ = "snippet"
 
@@ -34,13 +40,14 @@ class Snippet(db.Model):
 
     sentences = db.relationship("Sentence")
 
-    def to_resp(self, with_sentences=True) -> SnippetResponse:
-        sentences = [s.to_resp() for s in self.sentences] if with_sentences else None
+    @staticmethod
+    def to_resp(s: "Snippet", with_sentences=True) -> SnippetResponse:
+        sentences = [Sentence.to_resp(sen) for sen in s.sentences] if with_sentences else None
         return SnippetResponse(
-            id=self.id,
-            headline=self.headline,
+            id=s.id,
+            headline=s.headline,
             sentences=sentences,
-            count=len(self.sentences)
+            count=len(s.sentences)
             )
 
 
@@ -50,15 +57,26 @@ class Sentence(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     snippet_id = db.Column(db.Integer, db.ForeignKey('snippet.id'))
     body = db.Column(db.Text)
-    embedding = db.Column(db.LargeBinary)
+    embedding = db.Column(db.PickleType, nullable=False)
 
     @staticmethod
-    def create(text: str) -> "Sentence":
-        return Sentence(body=text)
+    def create(data: Tuple[str, np.ndarray]) -> "Sentence":
+        body, embedding = data
+        return Sentence(body=body, embedding=embedding.dumps())
 
-    def to_resp(self) -> SentenceResponse:
+    @staticmethod
+    def to_resp(sentence: "Sentence", score=-1) -> SentenceResponse:
         return SentenceResponse(
-            id=self.id,
-            body=self.body,
-            score=-1,
+            id=sentence.id,
+            body=sentence.body,
+            score=score,
+            )
+
+    @staticmethod
+    def to_dict(score: int, sentence: "Sentence") -> SentenceDict:
+        return SentenceDict(
+            id=sentence.id,
+            body=sentence.body,
+            score=score,
+            vector=pickle.loads(sentence.embedding)
             )

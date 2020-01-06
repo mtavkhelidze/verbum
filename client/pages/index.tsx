@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import Layout from "../components/Layout";
 import SnippetList from "../components/SnippetList";
+import { apiUrl } from "../util/misc";
 
 interface Props {
     snippets: Snippet[];
@@ -20,7 +21,7 @@ const Home: NextPage<Props> = props => {
 
 Home.getInitialProps = async () => {
     const snippets = await axios
-      .get<Snippet[]>("http://localhost:5000/snippets")
+      .get<Snippet[]>(apiUrl("/snippet"))
       .then(r => r.data);
 
     return { snippets };

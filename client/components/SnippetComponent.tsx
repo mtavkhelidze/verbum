@@ -13,7 +13,7 @@ interface Props {
 }
 
 const SnippetComponent = (props: Props) => {
-    const { id, count, tagLine } = props.snippet;
+    const { id, count, headline } = props.snippet;
     const router = useRouter();
     const onClick = async () => {
         await router.push("/snippet/[id]", `/snippet/${id}`);
@@ -22,7 +22,7 @@ const SnippetComponent = (props: Props) => {
       <Card className="border-0 p-0">
           <CardBody style={style} onClick={onClick}>
               <Row>
-                  <Col xs="10"><h5>{tagLine}</h5></Col>
+                  <Col xs="10"><h5>{headline}</h5></Col>
                   <Col xs="2"><h3><Badge color="secondary">{count}</Badge>
                   </h3></Col>
               </Row>

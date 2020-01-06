@@ -3,11 +3,23 @@
 	client client-install-packages client-build \
 	docker
 
+DOCKER_USER ?= mtavkhelidze
+DOCKER_IMAGE ?= verbum
 
-all: server client
+all:
+	@echo $(DOCKER_USER)
 
-docker:
-	git archive --format tar --output verbum-client.zip master
+docker: docker-image
+
+docker-image: git-archive
+	docker build -t $(DOCKER_USER)/$(DOCKER_IMAGE) .
+
+git-archive: pip-freeze
+	rm -f $(DOCKER_IMAGE)-src.tar
+	git archive --format tar --output $(DOCKER_IMAGE)-src.tar master
+
+pip-freeze:
+	pipenv run pip freeze > requirements.txt
 
 server:
 	@$(MAKE) server-install-packages server-typecheck server-create-database

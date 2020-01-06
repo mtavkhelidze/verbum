@@ -15,9 +15,9 @@ interface SimilarResult {
 interface Snippet {
     id: number;
     count: number;
-    tagLine: string;
+    headline: string;
 }
 
 interface FullSnippet extends Snippet {
-    parts: Sentence[];
+    sentences: Sentence[];
 }

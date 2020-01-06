@@ -1,4 +1,4 @@
-from typing import Callable, Generic, Optional, TypeVar, Union
+from typing import Callable, Generic, Optional, TypeVar
 
 
 # Shamelessly stolen from http://bit.ly/369lS2Z with a slight modifications
@@ -59,5 +59,6 @@ class Nil(Option):
 
     def get_or_else(self, alt: B) -> B:
         return alt
+
 
 nil = Nil()

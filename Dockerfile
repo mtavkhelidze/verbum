@@ -1,11 +1,29 @@
-FROM node:13.5
+FROM python:3.7-alpine
 
-# client
-WORKDIR /usr/src
-COPY client/ .
+RUN apk add --no-cache gcc musl-dev libblas3 liblapack3 liblapack-dev libblas-dev
+COPY requirements.txt /
+RUN pip install -r /requirements.txt
 
-WORKDIR /usr/src/client
-RUN npm install
-RUN npm run build
+#
+#
+#RUN set -xe \
+#  && apt-get update \
+#  && apt-get install -y python3
+#ADD requirements.txt .
+#RUN pip install -r requirements.txt
 
-CMD ["npm", "start"]
+## setup
+#COPY verbum-src.tar .
+#
+#RUN tar xf verbum-src.tar
+#RUN rm -f verbum-src.tar
+#
+## server
+#RUN pip install -r requirements.txt
+#
+## client
+#WORKDIR ./client
+#RUN npm install
+#RUN npm run build
+#
+#CMD ["npm", "start"]

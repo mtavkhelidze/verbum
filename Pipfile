@@ -12,6 +12,10 @@ flask-migrate = "*"
 python-dotenv = "*"
 nltk = "*"
 typing-extensions = "*"
+sentence-transformers = "*"
+numpy = "*"
+PyYaml = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.7"

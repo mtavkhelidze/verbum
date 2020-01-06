@@ -2,6 +2,7 @@ import axios from "axios";
 import * as React from "react";
 import { ChangeEvent, useCallback, useState } from "react";
 import { Alert, Button, FormGroup, Input, Label } from "reactstrap";
+import { apiUrl } from "../util/misc";
 import { None, Option, Some } from "../util/option";
 
 interface Props {
@@ -19,7 +20,7 @@ const InputText = (props: Props) => {
 
     const onClick = useCallback(async () => {
         const { id } = await axios.post<{ id: number }>(
-          "http://localhost:5000/snippets",
+          apiUrl("/snippet"),
           value,
         ).then(r => r.data);
         props.onSave(id);

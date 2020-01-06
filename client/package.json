@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "next",
+        "prebuild": "next telemetry disable",
         "build": "next build",
         "start": "next start"
     },

@@ -1,45 +1,15 @@
-.PHONY: all server server-typecheck server-install-packages \
-	server-create-database \
-	client client-install-packages client-build \
-	docker
-
 DOCKER_USER ?= mtavkhelidze
-DOCKER_IMAGE ?= verbum
+NGINX_IMAGE_NAME ?= verbum-nginx
+CLIENT_IMAGE_NAME ?= verbum-client
+export
 
-all:
-	@echo $(DOCKER_USER)
+TOPTARGETS := all clean
+SUBDIRS := nginx client
 
-docker: docker-image
+$(TOPTARGETS): $(SUBDIRS)
 
-docker-image: git-archive
-	docker build -t $(DOCKER_USER)/$(DOCKER_IMAGE) .
-
-git-archive: pip-freeze
-	rm -f $(DOCKER_IMAGE)-src.tar
-	git archive --format tar --output $(DOCKER_IMAGE)-src.tar master
-
-pip-freeze:
-	pipenv run pip freeze > requirements.txt
-
-server:
-	@$(MAKE) server-install-packages server-typecheck server-create-database
-
-client: client-install-packages client-build
-
-client-install-packages:
-	(cd client && npm install)
-
-client-build:
-	(cd client && npm run build)
-
-server-typecheck:
-	mypy --ignore-missing-imports src
-
-server-install-packages:
-	(cd src && pipenv install)
-
-server-create-database:
-	rm -fr data/*.sqlite3
-	pipenv run python scripts/db_setup.py
+$(SUBDIRS):
+	$(MAKE) -C $@ $(MAKECMDGOALS)
 
 
+.PHONY: $(TOPTARGETS) $(SUBDIRS)

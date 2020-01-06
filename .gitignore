@@ -1666,3 +1666,6 @@ out/
 css-exp
 !/client/.env
 app/app.db
+!/client/Makefile
+old.*
+requirements.txt

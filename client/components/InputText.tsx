@@ -19,11 +19,18 @@ const InputText = (props: Props) => {
     }, [value]);
 
     const onClick = useCallback(async () => {
-        const { id } = await axios.post<{ id: number }>(
-          apiUrl("/snippet"),
-          value,
-        ).then(r => r.data);
-        props.onSave(id);
+        setLoading(true);
+        const res = await axios
+          .post<{ id: number }>(
+            apiUrl("/snippet"),
+            value,
+          )
+          .then(r => r.data)
+          .catch(e => setError(e.message));
+        if(res) {
+            props.onSave(res.id);
+        }
+        setLoading(false);
     }, [value, props.onSave]);
 
     const onDismiss = () => {

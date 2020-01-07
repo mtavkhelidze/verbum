@@ -25,3 +25,14 @@ a while since it downloads a few gigabytes of language data.
 Take a look at `client/Dockerfile` and `server/Dockerfile`
 to see what steps need to be taken to setup respective
 systems. After that use standard Flask/NextJS dev practices.
+
+## TODO
+
+In random order:
+
+- Improve UI: it's ugly
+- Optimize Docker builds
+- Fix some code-smell both in `server` and `client`
+- Add tests
+- Add other languages
+- Migrate to something more serious than SQLite

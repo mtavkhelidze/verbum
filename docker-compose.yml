@@ -1,8 +1,25 @@
 version: '3'
 services:
+  server:
+    image: verbum-server
+    build:
+      context: ./server
+      args:
+        model_name: ${NLP_MODEL_NAME}
+    env_file: .env
   client:
-    build: ./client
+    image: verbum-client
+    build:
+      context: ./client
+      args:
+        API_URL: ${API_URL}
+    env_file: .env
   nginx:
-    build: ./nginx
+    image: verbum-nginx
+    build:
+      context: ./nginx
+      args:
+        client_port: ${CLIENT_PORT}
+        server_port: ${FLASK_RUN_PORT}
     ports:
       - 80:80

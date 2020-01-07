@@ -21,3 +21,8 @@ interface Snippet {
 interface FullSnippet extends Snippet {
     sentences: Sentence[];
 }
+
+declare module "*.scss" {
+    const content: { [className: string]: string };
+    export default content;
+}

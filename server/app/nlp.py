@@ -16,11 +16,7 @@ class NLP:
     def __init__(self, app: Flask):
         self.app = app
         with app.app_context():
-            self.model = SentenceTransformer(app.config["NLP_MODEL_NAME"])
-
-    def similar(self, sent: str) -> List[str]:
-        with self.app.app_context():
-            return []
+            self.model = SentenceTransformer("./model.bin")
 
     def make_embeddings(self, sentences: List[str]) -> List[Tuple[str, np.ndarray]]:
         embeds = self.model.encode(sentences)

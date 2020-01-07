@@ -1669,3 +1669,4 @@ app/app.db
 !/client/Makefile
 old.*
 requirements.txt
+.env

@@ -17,7 +17,7 @@ $ docker-compose up
 ```
 
 Once the build and launch is complete, the site will be
-available at `http://<your host name>/`. Build might take quie
+available at `http://<your host name>/`. Build might take quite
 a while since it downloads a few gigabytes of language data.
 
 ## Development

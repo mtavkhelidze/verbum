@@ -23,7 +23,7 @@
         "bootstrap": "^4.4.1",
         "dotenv": "^8.2.0",
         "jquery": "^3.4.1",
-        "next": "^9.1.6",
+        "next": "^9.3.2",
         "next-runtime-dotenv": "^1.2.0",
         "ramda": "^0.26.1",
         "react": "^16.12.0",
